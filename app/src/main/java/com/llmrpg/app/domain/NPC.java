@@ -1,5 +1,6 @@
 package com.llmrpg.app.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NPC {
@@ -21,6 +22,7 @@ public class NPC {
         this.backstory = backstory;
         this.appearance = appearance;
         this.knowledge = knowledge;
+        this.relationships = new ArrayList<Relationship>();
     }
 
     public String getId() {
