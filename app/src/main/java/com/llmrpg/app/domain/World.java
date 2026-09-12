@@ -1,5 +1,6 @@
 package com.llmrpg.app.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class World {
@@ -10,11 +11,13 @@ public class World {
     public World(String seed, String name) {
         this.seed = seed;
         this.name = name;
+        this.location = new ArrayList<>();
     }
 
     public Location getLocation(String name) {
         for (Location loc : location) {
-            if (loc.getName().equals(name)) {
+            if (loc.getId().equalsIgnoreCase(name)
+                    || loc.getName().equalsIgnoreCase(name)) {
                 return loc;
             }
         }

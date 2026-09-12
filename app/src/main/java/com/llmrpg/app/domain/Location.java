@@ -1,5 +1,6 @@
 package com.llmrpg.app.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Location {
@@ -13,6 +14,8 @@ public class Location {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.npcs = new ArrayList<>();
+        this.structures = new ArrayList<>();
     }
 
     public String getId() {
