@@ -4,15 +4,19 @@ package com.llmrpg.app.game;
 public class CommandProcessor {
 
     public Command processCommand(String input) {
+        if (input == null || input.isBlank()) {
+            throw new IllegalArgumentException("Digite um comando. Use help para ver as opcoes.");
+        }
+
         String normalized = input.trim().toLowerCase();
 
         if (normalized.equals("look")) {
             return new Command(CommandType.LOOK, null);
         }
 
-        // if (normalized.equals("inventory")) {
-        // return new Command(CommandType.INVENTORY, null);
-        // }
+        if (normalized.equals("inventory")) {
+            return new Command(CommandType.INVENTORY, null);
+        }
 
         if (normalized.equals("help")) {
             return new Command(CommandType.HELP, null);
@@ -34,6 +38,6 @@ public class CommandProcessor {
             return new Command(CommandType.TALK, target);
         }
 
-        throw new IllegalArgumentException("Unknown command");
+        throw new IllegalArgumentException("Comando desconhecido. Use help para ver as opcoes.");
     }
 }

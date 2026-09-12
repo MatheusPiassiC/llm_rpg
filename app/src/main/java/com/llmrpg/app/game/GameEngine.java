@@ -18,7 +18,7 @@ public class GameEngine {
             case LOOK -> look();
             case MOVE -> move(command.getArgument());
             case TALK -> talk(command.getArgument());
-            // case INVENTORY -> inventory();
+            case INVENTORY -> inventory();
             case HELP -> help();
             case QUIT -> quit();
         };
@@ -36,6 +36,15 @@ public class GameEngine {
         output.append(location.getDescription())
                 .append("\n");
 
+        output.append("\nLocais a vista:\n");
+        for (Location visibleLocation : gameState.getWorld().getLocationsList()) {
+            if (!visibleLocation.getId().equals(location.getId())) {
+            output.append("- ")
+                .append(visibleLocation.getName())
+                .append("\n");
+            }
+        }
+
         // NPCs
         if (!location.getNpcs().isEmpty()) {
             output.append("\nPeople here:\n");
@@ -51,15 +60,30 @@ public class GameEngine {
     }
 
     private String move(String direction) {
-        return null;
+        Location destination = gameState.getWorld().getLocation(direction);
+        if (destination == null) {
+            return "Local nao encontrado: " + direction;
+        }
+
+        gameState.getPlayer().moveTo(destination);
+        return "Voce entrou em " + destination.getName() + ".";
     }
 
     private String talk(String target) {
-        return null;
+        return "Conversacao com NPC ainda nao foi implementada: " + target;
+    }
+
+    private String inventory() {
+        return "Inventario vazio.";
     }
 
     private String help() {
-        return null;
+        return "Comandos:\n"
+            + "look - observar o local atual\n"
+            + "go <local> - mover-se para um local\n"
+            + "talk <npc> - conversar com um NPC\n"
+            + "help - mostrar esta ajuda\n"
+            + "quit - encerrar o jogo";
     }
 
     private String quit() {

@@ -16,7 +16,8 @@ public class World {
 
     public Location getLocation(String name) {
         for (Location loc : location) {
-            if (loc.getName().equals(name)) {
+            if (loc.getId().equalsIgnoreCase(name)
+                    || loc.getName().equalsIgnoreCase(name)) {
                 return loc;
             }
         }

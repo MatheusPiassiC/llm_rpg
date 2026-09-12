@@ -23,6 +23,13 @@ public class Player {
         return currentLocation;
     }
 
+    public void moveTo(Location location) {
+        if (location == null) {
+            throw new IllegalArgumentException("A localizacao nao pode ser nula.");
+        }
+        this.currentLocation = location;
+    }
+
     public List<Relationship> getRelationships() {
         return relationships;
     }

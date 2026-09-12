@@ -1,12 +1,9 @@
 package com.llmrpg.app.game;
 
-import java.util.Scanner;
-
-// Controla o loop principal do jogo, gerenciando o estado do jogo e a interação com o jogador
 public class Game {
-    private GameState gameState;
-    private CommandProcessor commandProcessor;
-    private GameEngine gameEngine;
+    private final GameState gameState;
+    private final CommandProcessor commandProcessor;
+    private final GameEngine gameEngine;
 
     public Game(GameState gameState, CommandProcessor commandProcessor) {
         this.gameState = gameState;
@@ -14,13 +11,27 @@ public class Game {
         this.gameEngine = new GameEngine(gameState);
     }
 
-    public void start(Scanner input) {
-        while (gameState.isRunning() && input.hasNextLine()) {
-            String text = input.nextLine();
-            Command command = commandProcessor.processCommand(text);
-            String output = gameEngine.execute(command);
+    public boolean isRunning() {
+        return gameState.isRunning();
+    }
 
-            System.out.println(output);
+    public String process(String input) {
+        try {
+            Command command = commandProcessor.processCommand(input);
+            return gameEngine.execute(command);
+        } catch (IllegalArgumentException exception) {
+            return exception.getMessage();
+        }
+    }
+
+    public void start(GameUI ui) {
+        ui.show("Bem-vindo a " + gameState.getWorld().getName() + "!");
+        ui.show("Digite help para ver os comandos.");
+        ui.show(process("look"));
+
+        while (isRunning() && ui.hasInput()) {
+            ui.showPrompt();
+            ui.show(process(ui.readInput()));
         }
     }
 }
